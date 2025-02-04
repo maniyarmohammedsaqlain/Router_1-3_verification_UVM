@@ -163,17 +163,15 @@ endtask
 
 task read_dut();
 begin
-//   #10;
-  `uvm_info("DRV","DUT READ",UVM_NONE);
+`uvm_info("DRV","DUT READ",UVM_NONE);
 inf.lfd_state<=0;
 inf.resetn<=1;
-// inf.data_in<=trans.data_in;
 inf.read_enb<=1;
 inf.write_enb<=0;
 inf.soft_reset<=0;
 @(posedge inf.clock);
 inf.read_enb<=0;
-// inf.data_out<=trans.data_out;
+  @(posedge inf.clock); 
 end
 endtask
 
@@ -261,8 +259,7 @@ trans.op=3;
 trans.read_enb=1;
 trans.full=inf.full;
 trans.empty=inf.empty;
-//   @(posedge inf.clock);
-  #10;
+  @(posedge inf.clock);
 trans.data_out=inf.data_out;
   
 `uvm_info("MON",$sformatf("DATA READ DOUT:%0d",trans.data_out),UVM_NONE);
